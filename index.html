@@ -8,12 +8,70 @@
 body{
   font-family:Arial, sans-serif;
   margin:0;
-  background-image:url("background.jpg"); /* Add your image file here */
-  background-size:cover;
-  background-position:center;
-  background-attachment:fixed;
+  background:#f4f6f9;
 }
 
+/* --- Animated Splash Screen --- */
+#splash {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:linear-gradient(135deg,#3f7ae0,#00c6ff);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
+  flex-direction:column;
+  z-index:9999;
+  overflow:hidden;
+  animation: fadeInBg 2s forwards;
+}
+
+#splash h1 {
+  margin:0;
+  font-size:40px;
+  text-align:center;
+  opacity:0;
+  animation: slideIn 2s forwards;
+  line-height:1.4;
+}
+
+#splash button{
+  margin-top:30px;
+  padding:12px 30px;
+  font-size:18px;
+  cursor:pointer;
+  border:none;
+  border-radius:8px;
+  background:#ffffff;
+  color:#3f7ae0;
+  font-weight:bold;
+  opacity:0;
+  animation: fadeInBtn 1.5s forwards 1.5s;
+  transition: transform 0.3s;
+}
+#splash button:hover{
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes slideIn {
+  0% {opacity:0; transform: translateY(-50px);}
+  100% {opacity:1; transform: translateY(0);}
+}
+
+@keyframes fadeInBtn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@keyframes fadeInBg {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+/* --- Dashboard styles --- */
 .header{
   background:#3f7ae0;
   color:white;
@@ -25,8 +83,9 @@ body{
 
 .container{
   padding:15px;
-  background:rgba(255,255,255,0.9); /* Makes content readable on image */
+  background:white;
   border-radius:10px;
+  margin:15px;
 }
 
 /* Tables */
@@ -104,11 +163,22 @@ h3{
     font-size:13px;
     padding:6px;
   }
+  #splash h1{ font-size:32px; }
 }
 </style>
 </head>
 
 <body>
+
+<!-- --- Animated Splash Screen --- -->
+<div id="splash">
+  <h1>
+    Welcome<br>
+    to<br>
+    Hemadurga Srinivasam
+  </h1>
+  <button id="enterBtn">Enter Dashboard</button>
+</div>
 
 <div class="header">
 HEMADURGA SRINIVASAM<br>
@@ -120,13 +190,13 @@ MARCH-2026
 <!-- Opening Balance -->
 <table>
 <tr>
-<th>Last Month Balance:</th>
+<th>Last Month Balance</th>
 <td class="balance" id="openingBalanceDisplay"></td>
 </tr>
 </table>
 
 <!-- Maintenance -->
-<h3>Maintenance:</h3>
+<h3>Maintenance</h3>
 <table id="maintenanceTable">
 <tr>
 <th>S.No</th>
@@ -149,7 +219,7 @@ MARCH-2026
 <tr class="maintRow"><td></td><td>Lift Usage (Flat 102)</td><td class="maint">500</td></tr>
 
 <tr class="total-maintenance-row">
-<td colspan="2">Total Maintenance:</td>
+<td colspan="2">Total Maintenance</td>
 <td id="totalMaintenance" class="total-maintenance-amount"></td>
 </tr>
 </table>
@@ -157,13 +227,13 @@ MARCH-2026
 <!-- Opening + Maintenance -->
 <table>
 <tr>
-<th>Last Month Balance + Maintenance:</th>
+<th>Last Month Balance + Maintenance</th>
 <td class="balance" id="openingPlusMaintenance"></td>
 </tr>
 </table>
 
 <!-- Expenses -->
-<h3>Expenses:</h3>
+<h3>Expenses</h3>
 <table id="expenseTable">
 <tr>
 <th>S.No</th>
@@ -178,7 +248,7 @@ MARCH-2026
 <tr class="expenseRow"><td></td><td>Common Net Bill (6 + 1 Months)</td><td class="amount">3887</td></tr>
 
 <tr class="total-expense-row">
-<td colspan="2">Total Expenses:</td>
+<td colspan="2">Total Expenses</td>
 <td id="totalExpense" class="total-expense-amount"></td>
 </tr>
 </table>
@@ -186,7 +256,7 @@ MARCH-2026
 <!-- Closing Balance -->
 <table>
 <tr class="balance">
-<td>Closing Balance:</td>
+<td>Closing Balance</td>
 <td id="closingBalance"></td>
 </tr>
 </table>
@@ -200,43 +270,40 @@ Developed by <b>Siva Charan Bethini</b>
 </div>
 
 <script>
-/* Opening Balance */
+/* --- Splash Screen --- */
+document.getElementById("enterBtn").addEventListener("click", function(){
+  let splash = document.getElementById("splash");
+  splash.style.opacity = 0;
+  setTimeout(()=>{ splash.style.display = "none"; }, 800);
+});
+
+/* --- Dashboard Calculations --- */
 let openingBalance = 35726;
-
-/* Currency Format */
-function formatINR(num){
-  return "₹" + num.toLocaleString("en-IN");
-}
-
-/* Display Opening Balance */
+function formatINR(num){ return "₹" + num.toLocaleString("en-IN"); }
 document.getElementById("openingBalanceDisplay").innerText = formatINR(openingBalance);
 
-/* Maintenance Calculation */
+/* Maintenance */
 let maintenanceRows = document.querySelectorAll(".maintRow");
 let totalMaintenance = 0;
-
 maintenanceRows.forEach((row,index)=>{
   row.children[0].innerText = index + 1;
   let amount = row.querySelector(".maint");
   totalMaintenance += Number(amount.innerText);
 });
-
 document.getElementById("totalMaintenance").innerText = formatINR(totalMaintenance);
 
 /* Opening + Maintenance */
 let openingPlusMaintenance = openingBalance + totalMaintenance;
 document.getElementById("openingPlusMaintenance").innerText = formatINR(openingPlusMaintenance);
 
-/* Expense Calculation */
+/* Expenses */
 let expenseRows = document.querySelectorAll(".expenseRow");
 let totalExpense = 0;
-
 expenseRows.forEach((row,index)=>{
   row.children[0].innerText = index + 1;
   let amount = row.querySelector(".amount");
   totalExpense += Number(amount.innerText);
 });
-
 document.getElementById("totalExpense").innerText = formatINR(totalExpense);
 
 /* Closing Balance */
