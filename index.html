@@ -109,8 +109,6 @@ font-size:13px;
 margin-top:15px;
 }
 
-/* Back Button */
-
 .backBtn{
 margin:15px;
 padding:10px 20px;
@@ -137,13 +135,11 @@ to<br>
 Hemadurga Srinivasam
 </h1>
 
-<button id="enterDashboard">Maintenance Dashboard</button>
-
-<button id="ownerPageBtn">Owner Details</button>
+<button id="enterDashboard">Maintenance Dashboard</button> <button id="ownerPageBtn">Owner Details</button>
 
 </div>
 
-<!-- Dashboard Page -->
+<!-- Maintenance Dashboard -->
 
 <div id="dashboardPage" style="display:none;">
 
@@ -239,7 +235,7 @@ Developed by <b>Siva Charan Bethini</b>
 
 </div>
 
-<!-- Owner Page -->
+<!-- Owner Details -->
 
 <div id="ownerPage" style="display:none;">
 
@@ -285,14 +281,9 @@ let splash=document.getElementById("splash");
 let dashboard=document.getElementById("dashboardPage");
 let ownerPage=document.getElementById("ownerPage");
 
-document.getElementById("ownerPageBtn").onclick=function(){
-splash.style.display="none";
-ownerPage.style.display="block";
-}
+/* Phone Verification Function */
 
-/* Phone Verification */
-
-document.getElementById("enterDashboard").onclick=function(){
+function verifyPhone(){
 
 let phone=prompt("Enter your registered phone number");
 
@@ -306,15 +297,37 @@ valid=true;
 }
 });
 
-if(valid){
-splash.style.display="none";
-dashboard.style.display="block";
-}
-else{
+if(!valid){
 alert("Access Denied. Phone number not registered.");
 }
 
+return valid;
+
 }
+
+/* Dashboard Access */
+
+document.getElementById("enterDashboard").onclick=function(){
+
+if(verifyPhone()){
+splash.style.display="none";
+dashboard.style.display="block";
+}
+
+}
+
+/* Owner Page Access */
+
+document.getElementById("ownerPageBtn").onclick=function(){
+
+if(verifyPhone()){
+splash.style.display="none";
+ownerPage.style.display="block";
+}
+
+}
+
+/* Back Button */
 
 function goHome(){
 dashboard.style.display="none";
