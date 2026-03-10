@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hemadurga Srinivasam Dashboard</title>
 
 <style>
+
 body{
 font-family:Arial;
 margin:0;
@@ -12,6 +14,7 @@ background:#f4f6f9;
 }
 
 /* Splash Screen */
+
 #splash{
 position:fixed;
 top:0;
@@ -119,6 +122,7 @@ cursor:pointer;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -135,12 +139,11 @@ Hemadurga Srinivasam
 
 <button id="enterDashboard">Maintenance Dashboard</button>
 
-<button id="ownerPageBtn">Flat Owner Dashboard</button>
+<button id="ownerPageBtn">Owner Details</button>
 
 </div>
 
-
-<!-- Maintenance Dashboard Page -->
+<!-- Dashboard Page -->
 
 <div id="dashboardPage" style="display:none;">
 
@@ -155,12 +158,12 @@ MARCH-2026
 
 <table>
 <tr>
-<th>Last Month Balance:</th>
+<th>Last Month Balance</th>
 <td class="balance" id="openingBalanceDisplay"></td>
 </tr>
 </table>
 
-<h3>Maintenance:</h3>
+<h3>Maintenance</h3>
 
 <table id="maintenanceTable">
 
@@ -183,7 +186,7 @@ MARCH-2026
 <tr class="maintRow"><td></td><td>Lift Usage (Flat 102)</td><td class="maint">500</td></tr>
 
 <tr>
-<td colspan="2"><b>Total Maintenance:</b></td>
+<td colspan="2"><b>Total Maintenance</b></td>
 <td id="totalMaintenance" class="total-maintenance-amount"></td>
 </tr>
 
@@ -191,7 +194,7 @@ MARCH-2026
 
 <table>
 <tr>
-<th>Last Month Balance + Maintenance:</th>
+<th>Last Month Balance + Maintenance</th>
 <td class="balance" id="openingPlusMaintenance"></td>
 </tr>
 </table>
@@ -222,7 +225,7 @@ MARCH-2026
 
 <table>
 <tr class="balance">
-<td>Closing Balance:</td>
+<td>Closing Balance</td>
 <td id="closingBalance"></td>
 </tr>
 </table>
@@ -236,8 +239,7 @@ Developed by <b>Siva Charan Bethini</b>
 
 </div>
 
-
-<!-- Owner Details Page -->
+<!-- Owner Page -->
 
 <div id="ownerPage" style="display:none;">
 
@@ -258,16 +260,16 @@ Owner Details
 <th>Phone Number</th>
 </tr>
 
-<tr class="ownerRow"><td></td><td>101</td><td>Sri: Thottempudi Masthan Rao</td><td>9686624789</td></tr>
-<tr class="ownerRow"><td></td><td>102</td><td>Smt: Yadamreddy Sridevi</td><td>9912034624</td></tr>
-<tr class="ownerRow"><td></td><td>201</td><td>Sri: Papani Ravindra</td><td>9177106347</td></tr>
-<tr class="ownerRow"><td></td><td>202</td><td>Sri: Chllagondla Rakesh</td><td>8419951321</td></tr>
-<tr class="ownerRow"><td></td><td>301</td><td>Smt: Muthyapu Nirmala</td><td>9908066966</td></tr>
-<tr class="ownerRow"><td></td><td>302</td><td>Smt: Muthyapu Nirmala</td><td>9908066966</td></tr>
-<tr class="ownerRow"><td></td><td>401</td><td>Sri: Veeramosu Abhinav</td><td>9491244952</td></tr>
-<tr class="ownerRow"><td></td><td>402</td><td>Sri: Bethini Siva Charan</td><td>9901881212</td></tr>
-<tr class="ownerRow"><td></td><td>501</td><td>N/A</td><td>N/A</td></tr>
-<tr class="ownerRow"><td></td><td>502</td><td>Sri: Boddu Sandeep</td><td>9963274757</td></tr>
+<tr class="ownerRow"><td></td><td>101</td><td>Ramesh Kumar</td><td>9876543210</td></tr>
+<tr class="ownerRow"><td></td><td>102</td><td>Suresh Reddy</td><td>9123456780</td></tr>
+<tr class="ownerRow"><td></td><td>201</td><td>Mahesh Gupta</td><td>9988776655</td></tr>
+<tr class="ownerRow"><td></td><td>202</td><td>Rajesh Sharma</td><td>9012345678</td></tr>
+<tr class="ownerRow"><td></td><td>301</td><td>Anil Verma</td><td>9090909090</td></tr>
+<tr class="ownerRow"><td></td><td>302</td><td>Sunil Rao</td><td>9345678912</td></tr>
+<tr class="ownerRow"><td></td><td>401</td><td>Prasad Rao</td><td>9988123456</td></tr>
+<tr class="ownerRow"><td></td><td>402</td><td>Kiran Reddy</td><td>9123987654</td></tr>
+<tr class="ownerRow"><td></td><td>501</td><td>Venkatesh</td><td>9011223344</td></tr>
+<tr class="ownerRow"><td></td><td>502</td><td>Srinivas</td><td>9345612789</td></tr>
 
 </table>
 
@@ -275,105 +277,103 @@ Owner Details
 
 </div>
 
-
 <script>
 
 /* Navigation */
 
-let splash = document.getElementById("splash");
-let dashboard = document.getElementById("dashboardPage");
-let ownerPage = document.getElementById("ownerPage");
+let splash=document.getElementById("splash");
+let dashboard=document.getElementById("dashboardPage");
+let ownerPage=document.getElementById("ownerPage");
 
-document.getElementById("enterDashboard").onclick = function(){
-
-splash.style.display="none";
-dashboard.style.display="block";
-
-}
-
-document.getElementById("ownerPageBtn").onclick = function(){
-
+document.getElementById("ownerPageBtn").onclick=function(){
 splash.style.display="none";
 ownerPage.style.display="block";
+}
+
+/* Phone Verification */
+
+document.getElementById("enterDashboard").onclick=function(){
+
+let phone=prompt("Enter your registered phone number");
+
+let valid=false;
+
+document.querySelectorAll(".ownerRow").forEach(row=>{
+let ownerPhone=row.children[3].innerText.trim();
+
+if(phone===ownerPhone){
+valid=true;
+}
+});
+
+if(valid){
+splash.style.display="none";
+dashboard.style.display="block";
+}
+else{
+alert("Access Denied. Phone number not registered.");
+}
 
 }
 
 function goHome(){
-
 dashboard.style.display="none";
 ownerPage.style.display="none";
 splash.style.display="flex";
-
 }
 
 /* Dashboard Calculations */
 
-let openingBalance = 35726;
+let openingBalance=35726;
 
 function formatINR(num){
-
-return "₹" + num.toLocaleString("en-IN");
-
+return "₹"+num.toLocaleString("en-IN");
 }
 
-document.getElementById("openingBalanceDisplay").innerText = formatINR(openingBalance);
+document.getElementById("openingBalanceDisplay").innerText=formatINR(openingBalance);
 
 /* Maintenance */
 
-let maintRows = document.querySelectorAll(".maintRow");
-
-let totalMaintenance = 0;
+let maintRows=document.querySelectorAll(".maintRow");
+let totalMaintenance=0;
 
 maintRows.forEach((row,index)=>{
-
-row.children[0].innerText = index+1;
-
-let amount = Number(row.querySelector(".maint").innerText);
-
-totalMaintenance += amount;
-
+row.children[0].innerText=index+1;
+let amount=Number(row.querySelector(".maint").innerText);
+totalMaintenance+=amount;
 });
 
-document.getElementById("totalMaintenance").innerText = formatINR(totalMaintenance);
+document.getElementById("totalMaintenance").innerText=formatINR(totalMaintenance);
 
 /* Opening + Maintenance */
 
-let openingPlusMaintenance = openingBalance + totalMaintenance;
-
-document.getElementById("openingPlusMaintenance").innerText = formatINR(openingPlusMaintenance);
+let openingPlusMaintenance=openingBalance+totalMaintenance;
+document.getElementById("openingPlusMaintenance").innerText=formatINR(openingPlusMaintenance);
 
 /* Expenses */
 
-let expenseRows = document.querySelectorAll(".expenseRow");
-
-let totalExpense = 0;
+let expenseRows=document.querySelectorAll(".expenseRow");
+let totalExpense=0;
 
 expenseRows.forEach((row,index)=>{
-
-row.children[0].innerText = index+1;
-
-let amount = Number(row.querySelector(".amount").innerText);
-
-totalExpense += amount;
-
+row.children[0].innerText=index+1;
+let amount=Number(row.querySelector(".amount").innerText);
+totalExpense+=amount;
 });
 
-document.getElementById("totalExpense").innerText = formatINR(totalExpense);
+document.getElementById("totalExpense").innerText=formatINR(totalExpense);
 
 /* Closing Balance */
 
-let closingBalance = openingBalance + totalMaintenance - totalExpense;
+let closingBalance=openingBalance+totalMaintenance-totalExpense;
+document.getElementById("closingBalance").innerText=formatINR(closingBalance);
 
-document.getElementById("closingBalance").innerText = formatINR(closingBalance);
+/* Owner Serial Numbers */
 
-/* Owner Table S.No */
-
-let ownerRows = document.querySelectorAll(".ownerRow");
+let ownerRows=document.querySelectorAll(".ownerRow");
 
 ownerRows.forEach((row,index)=>{
-
-row.children[0].innerText = index+1;
-
+row.children[0].innerText=index+1;
 });
 
 </script>
